@@ -19,7 +19,7 @@ void MainWindow::printMessage(const QString &notif, const QString &colorName) {
   QTime time = QTime::currentTime();
   QString msg = QString("<font color=\"%4\">%2:&nbsp;</font>"
                         "<font color=\"%1\">%3 </font>")
-                    .arg(colorName, time.toString("HH:mm:ss"), notif, "brown");
+                    .arg(colorName, time.toString("HH:mm:ss"), notif, "blue");
   ui->outputPlainTextEdit->appendHtml(msg);
 }
 
@@ -30,7 +30,7 @@ void MainWindow::newLog(const Log::LogLevel &level, const QString &msg) {
     break;
   }
   case (Log::InfoLv): {
-    printMessage(msg, "blue");
+    printMessage(msg, "black");
     break;
   }
   case (Log::WarnLv): {

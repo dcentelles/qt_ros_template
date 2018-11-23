@@ -23,9 +23,12 @@ signals:
   void rosShutdown();
 
 private:
+  void publishControls();
   void CreateROSCommunications();
+  ButtonsStatus controls;
   int init_argc;
   char **init_argv;
+  ros::Publisher controlsPublisher;
 };
 } // namespace hmi
 #endif // QROSNODE_H

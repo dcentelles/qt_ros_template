@@ -12,7 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_srvs
   actionlib
   actionlib_msgs
-  tf
+  hmi_msgs
 )
 #http://doc.qt.io/qt-5/cmake-manual.html
 # Find includes in corresponding build directories
@@ -35,7 +35,6 @@ generate_messages(DEPENDENCIES
     std_msgs
     actionlib_msgs
     )
-
 add_definitions(-fPIC -std=c++14)
 
 SET(PROJECT_INCLUDE_DIRS
@@ -73,8 +72,9 @@ set(QT_DEPS
         Qt5::Widgets
         Qt5::Core
         )
-message("DETECTED QT VERSION: "${Qt5Core_VERSION})
-message("DETECTED QT LIBRARIES: "${Qt5Core_INCLUDE_DIRS})
+#message("DETECTED QT VERSION: "${Qt5Core_VERSION})
+#message("DETECTED QT LIBRARIES: "${Qt5Core_INCLUDE_DIRS})
+
 target_include_directories(${${PROJECT_NAME}_LIB} PUBLIC ${PROJECT_INCLUDE_DIRS})
 target_link_libraries(${${PROJECT_NAME}_LIB}  ${QT_DEPS}  ${catkin_LIBRARIES})
 
@@ -84,25 +84,16 @@ add_executable(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME} ${${PROJECT_NAME}_LIB})
 
-
-###################################
-## catkin specific configuration ##
-###################################
-## The catkin_package macro generates cmake config files for your package
-## Declare things to be passed to dependent projects
-## INCLUDE_DIRS: uncomment this if you package contains header files
-## LIBRARIES: libraries you create in this project that dependent projects also need
-## CATKIN_DEPENDS: catkin_packages dependent projects also need
-## DEPENDS: system dependencies of this project that dependent projects also need
+# The following is for force msg dependencies to be compiled before:
+#   https://answers.ros.org/question/73048/first-compile-with-messages-messages-not-found/
+add_dependencies(${${PROJECT_NAME}_LIB} ${catkin_EXPORTED_TARGETS})
 
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES qt_prueba
     CATKIN_DEPENDS
     roscpp std_msgs
     message_runtime
     actionlib_msgs
-    tf
+    hmi_msgs
    DEPENDS
     ${QT_DEPS}
 )

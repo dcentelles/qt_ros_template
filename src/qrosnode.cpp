@@ -2,8 +2,8 @@
 #include <QImage>
 #include <hmi/logger.h>
 #include <hmi/qrosnode.h>
-#include <tf/transform_broadcaster.h>
-#include <tf/transform_listener.h>
+#include <hmi_msgs/Controls.h>
+#include <ros/publisher.h>
 #include <thread>
 
 namespace hmi {
@@ -50,8 +50,8 @@ bool QROSNode::init(const std::string &master_url,
 }
 
 void QROSNode::CreateROSCommunications() {
-  ros::NodeHandle nh;
-  //...
+  ros::NodeHandle nh("~");
+  controlsPublisher = nh.advertise<hmi_msgs::Controls>("controls", 1);
 }
 
 void QROSNode::run() {
@@ -71,5 +71,21 @@ void QROSNode::run() {
   rosShutdown(); // used to signal the gui for a shutdown (useful to roslaunch)
 }
 
-void QROSNode::controlsUpdate(const ButtonsStatus &bs) {}
+void QROSNode::publishControls() {
+  hmi_msgs::Controls msg;
+  msg.down = controls.down;
+  msg.up = controls.up;
+  msg.forward = controls.forward;
+  msg.reverse = controls.reverse;
+  msg.left = controls.left;
+  msg.right = controls.right;
+  msg.turn_left = controls.tleft;
+  msg.turn_right = controls.tright;
+  controlsPublisher.publish(msg);
+}
+
+void QROSNode::controlsUpdate(const ButtonsStatus &bs) {
+  controls = bs;
+  publishControls();
+}
 } // namespace hmi
