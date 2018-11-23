@@ -3,6 +3,8 @@
 #include <hmi/mainwindow.h>
 #include <hmi/qrosnode.h>
 
+using namespace hmi;
+
 int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
 
@@ -17,6 +19,9 @@ int main(int argc, char *argv[]) {
 
   QObject::connect(&log, SIGNAL(newLog(const Log::LogLevel &, const QString &)),
                    &w, SLOT(newLog(const Log::LogLevel &, const QString &)));
+
+  QObject::connect(&w, SIGNAL(controlsUpdate(const ButtonsStatus &)), &rosNode,
+                   SLOT(controlsUpdate(const ButtonsStatus &)));
 
   rosNode.init();
   w.show();

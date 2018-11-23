@@ -1,5 +1,7 @@
 #include <hmi/logger.h>
 
+namespace hmi {
+
 static Log logger;
 std::mutex Log::locker;
 
@@ -26,3 +28,5 @@ void Log::log(const LogLevel &level, const QString &msg) {
                        msg); // used to readjust the scrollbar
   locker.unlock();
 }
+
+} // namespace hmi

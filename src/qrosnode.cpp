@@ -6,6 +6,7 @@
 #include <tf/transform_listener.h>
 #include <thread>
 
+namespace hmi {
 QROSNode::QROSNode(int argc, char **argv) : init_argc(argc), init_argv(argv) {
   init();
 }
@@ -69,3 +70,6 @@ void QROSNode::run() {
   Q_EMIT
   rosShutdown(); // used to signal the gui for a shutdown (useful to roslaunch)
 }
+
+void QROSNode::controlsUpdate(const ButtonsStatus &bs) {}
+} // namespace hmi

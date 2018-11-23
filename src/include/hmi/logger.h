@@ -5,6 +5,7 @@
 #include <ros/network.h>
 #include <ros/ros.h>
 
+namespace hmi {
 class Log : public QObject {
   Q_OBJECT
 
@@ -25,4 +26,5 @@ private:
   static void log(const LogLevel &level, const QString &msg);
   static std::mutex locker;
 };
+} // namespace hmi
 #endif // HMI_LOGGER_H_

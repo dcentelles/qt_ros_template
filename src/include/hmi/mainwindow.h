@@ -9,12 +9,17 @@ namespace Ui {
 class MainWindow;
 }
 
+namespace hmi {
+
 class MainWindow : public QMainWindow {
   Q_OBJECT
 
 public:
   MainWindow(int argc, char **argv, QWidget *parent = 0);
   ~MainWindow();
+
+signals:
+  void controlsUpdate(const ButtonsStatus &);
 
 public slots:
   void newLog(const Log::LogLevel &, const QString &);
@@ -44,9 +49,19 @@ private slots:
 
   void on_leftButton_released();
 
+  void on_downButton_pressed();
+
+  void on_upButton_pressed();
+
+  void on_upButton_released();
+
+  void on_downButton_released();
+
 private:
   Ui::MainWindow *ui;
 
   void printMessage(const QString &notif, const QString &colorName);
+  ButtonsStatus bs;
 };
+} // namespace hmi
 #endif // HMI_MAINWINDOW_H

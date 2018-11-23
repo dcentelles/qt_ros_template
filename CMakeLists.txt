@@ -51,6 +51,7 @@ qt5_wrap_cpp(hmi_SRC
     ${HW_HEADER_DIR}/mainwindow.h
     ${HW_HEADER_DIR}/qrosnode.h
     ${HW_HEADER_DIR}/logger.h
+    ${HW_HEADER_DIR}/common.h
     )
 qt5_wrap_ui(hmi_UI
     ${HW_GUI_DIR}/mainwindow.ui
@@ -63,6 +64,7 @@ add_library(${${PROJECT_NAME}_LIB}
         src/mainwindow.cpp
         src/qrosnode.cpp
         src/logger.cpp
+        src/common.cpp
         ${hmi_SRC}
         ${hmi_UI}
 	)
