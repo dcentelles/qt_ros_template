@@ -37,7 +37,7 @@ bool QROSNode::init(const std::string &master_url,
   std::map<std::string, std::string> remappings;
   remappings["__master"] = master_url;
   remappings["__hostname"] = host_url;
-  ros::init(remappings, "thrusters_controller_ui");
+  ros::init(remappings, "hmi");
   if (!ros::master::check()) {
     return false;
   }
